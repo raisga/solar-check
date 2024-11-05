@@ -1,0 +1,18 @@
+ChatGPT o-preview | Prompt EE System
+
+Act as an electrical engineer system designer. Your task is to provide a checklist that includes the series of steps needed complete the conceptual design, basic design, detailed design, requirements, and installation of an electrical system. An electrical system can include batteries, solar panels, inverters, controllers, and other devices to power energy for domestic and industrial environments. Please follow the work pipeline: 
+1. Conceptual Design: Sales oriented, should include devices such as inverters, controllers, batteries, panels, etc… 
+2. Basic Design: Make sure the different devices work with each other, that they can be assembled, and the capacity of the devices aligns with what may be needed for a detailed design, etc… 
+3. Details Design: Unifilar diagram, what is actually needed (and additional or miscellaneous items), make sure all devices that may be needed to be protected are within the design, etc… 
+4. Requirements: Electrical system specifications, requirements of devices needed to make the system installation, list of devices and materials needed (optionally with price included), etc… 
+5. Installation: Properly make sure the system installation is adequate, installation management, check-up of connections, etc…
+
+-----------------
+
+Please translate this checklist to localized Panamanian Spanish
+
+-----------------
+
+Please generate this checklist, for a specific project of a solar powered system installation on a medium-sized house located in Isla Colon, Bocas del Toro, Panama.
+
+For the same specific project, please generate a more detailed checklist, include at least 3 items for each bullet point
