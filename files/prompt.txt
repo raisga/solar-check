@@ -7,7 +7,7 @@ Act as an electrical engineer system designer. Your task is to provide a checkli
 4. Requirements: Electrical system specifications, requirements of devices needed to make the system installation, list of devices and materials needed (optionally with price included), etc… 
 5. Installation: Properly make sure the system installation is adequate, installation management, check-up of connections, etc…
 
------------------
+...
 
 Please translate this checklist to localized Panamanian Spanish
 
@@ -15,4 +15,11 @@ Please translate this checklist to localized Panamanian Spanish
 
 Please generate this checklist, for a specific project of a solar powered system installation on a medium-sized house located in Isla Colon, Bocas del Toro, Panama.
 
+...
+
 For the same specific project, please generate a more detailed checklist, include at least 3 items for each bullet point
+
+-----------------
+
+Create an interactive TODO list web app based on this checklist
+
