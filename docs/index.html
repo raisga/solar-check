@@ -6,7 +6,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 0; /* Ajustamos el margen para que la barra de progreso esté al tope */
             background-color: #f4f6f7;
         }
         h2, h3 {
@@ -29,13 +29,52 @@
             align-items: center;
             margin-bottom: 5px;
         }
+        /* Estilos para la barra de progreso */
+        .progress-container {
+            position: sticky;
+            top: 0;
+            background-color: #f4f6f7;
+            padding: 10px;
+            z-index: 1000;
+            border-bottom: 1px solid #ccc;
+        }
+        .progress-bar {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+            height: 20px;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background-color: #2e86c1;
+            width: 0%;
+            transition: width 0.25s;
+        }
+        .progress-text {
+            text-align: center;
+            margin-top: 5px;
+            font-weight: bold;
+        }
+        /* Ajustamos el margen superior del contenido para no ocultar el encabezado */
+        .content {
+            padding: 20px;
+        }
     </style>
 </head>
 <body>
 
-<h2>Lista de Verificación para el Diseño e Instalación de Sistemas Eléctricos</h2>
+<div class="progress-container">
+    <div class="progress-bar">
+        <div class="progress-bar-fill" id="progress-bar-fill"></div>
+    </div>
+    <div class="progress-text" id="progress-text">0% completado</div>
+</div>
 
-<div id="checklist"></div>
+<div class="content">
+    <h2>Lista de Verificación para el Diseño e Instalación de Sistemas Eléctricos</h2>
+    <div id="checklist"></div>
+</div>
 
 <script>
     const checklistData = [
@@ -324,6 +363,18 @@
     function createChecklist() {
         const checklistContainer = document.getElementById('checklist');
 
+        let totalCheckboxes = 0;
+        let checkedCheckboxes = 0;
+
+        // Función para actualizar la barra de progreso
+        function updateProgressBar() {
+            const progressBarFill = document.getElementById('progress-bar-fill');
+            const progressText = document.getElementById('progress-text');
+            const percentage = totalCheckboxes === 0 ? 0 : Math.round((checkedCheckboxes / totalCheckboxes) * 100);
+            progressBarFill.style.width = `${percentage}%`;
+            progressText.textContent = `${percentage}% completado`;
+        }
+
         checklistData.forEach((section, sectionIndex) => {
             const sectionDiv = document.createElement('div');
             sectionDiv.className = 'section';
@@ -356,6 +407,9 @@
                         const checkbox = document.createElement('input');
                         checkbox.type = 'checkbox';
 
+                        // Incrementar el conteo total de checkboxes
+                        totalCheckboxes++;
+
                         // Crear una clave única para cada subtask
                         const checkboxId = `section${sectionIndex}_task${taskIndex}_subtask${subtaskIndex}`;
                         checkbox.id = checkboxId;
@@ -364,11 +418,19 @@
                         const savedState = localStorage.getItem(checkboxId);
                         if (savedState === 'true') {
                             checkbox.checked = true;
+                            checkedCheckboxes++;
                         }
 
                         // Agregar evento para guardar el estado al marcar/desmarcar
                         checkbox.addEventListener('change', () => {
                             localStorage.setItem(checkboxId, checkbox.checked);
+                            // Actualizar el conteo de checkboxes marcados
+                            if (checkbox.checked) {
+                                checkedCheckboxes++;
+                            } else {
+                                checkedCheckboxes--;
+                            }
+                            updateProgressBar();
                         });
 
                         label.appendChild(checkbox);
@@ -384,6 +446,9 @@
 
             checklistContainer.appendChild(sectionDiv);
         });
+
+        // Actualizar la barra de progreso al cargar la página
+        updateProgressBar();
     }
 
     createChecklist();
