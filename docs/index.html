@@ -324,7 +324,7 @@
     function createChecklist() {
         const checklistContainer = document.getElementById('checklist');
 
-        checklistData.forEach(section => {
+        checklistData.forEach((section, sectionIndex) => {
             const sectionDiv = document.createElement('div');
             sectionDiv.className = 'section';
 
@@ -332,7 +332,7 @@
             sectionTitle.textContent = section.title;
             sectionDiv.appendChild(sectionTitle);
 
-            section.tasks.forEach(task => {
+            section.tasks.forEach((task, taskIndex) => {
                 const taskDiv = document.createElement('div');
                 taskDiv.className = 'task';
 
@@ -340,22 +340,38 @@
                 taskTitle.textContent = task.title;
                 taskDiv.appendChild(taskTitle);
 
-                task.subtasks.forEach(subtask => {
+                task.subtasks.forEach((subtask, subtaskIndex) => {
                     const subtaskDiv = document.createElement('div');
                     subtaskDiv.className = 'subtask';
 
-                    const checkbox = document.createElement('input');
-                    checkbox.type = 'checkbox';
-
                     const label = document.createElement('label');
-                    label.appendChild(checkbox);
 
-                    // Si el subtask empieza con "**" y termina con "**", es un subtítulo
                     if (subtask.startsWith("**") && subtask.endsWith("**")) {
+                        // Es un subtítulo, mostrar en negrita sin checkbox
                         const strongText = document.createElement('strong');
                         strongText.textContent = subtask.replace(/\*\*/g, '');
                         label.appendChild(strongText);
                     } else {
+                        // Crear el checkbox
+                        const checkbox = document.createElement('input');
+                        checkbox.type = 'checkbox';
+
+                        // Crear una clave única para cada subtask
+                        const checkboxId = `section${sectionIndex}_task${taskIndex}_subtask${subtaskIndex}`;
+                        checkbox.id = checkboxId;
+
+                        // Cargar el estado del checkbox desde localStorage
+                        const savedState = localStorage.getItem(checkboxId);
+                        if (savedState === 'true') {
+                            checkbox.checked = true;
+                        }
+
+                        // Agregar evento para guardar el estado al marcar/desmarcar
+                        checkbox.addEventListener('change', () => {
+                            localStorage.setItem(checkboxId, checkbox.checked);
+                        });
+
+                        label.appendChild(checkbox);
                         label.appendChild(document.createTextNode(subtask));
                     }
 

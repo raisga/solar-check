@@ -23,3 +23,10 @@ For the same specific project, please generate a more detailed checklist, includ
 
 Create an interactive TODO list web app based on this checklist
 
+...
+
+Update the code to add a save functionality, when the user checks an item, save the status of the checklist even when the page is reloaded, or if the browser is closed.
+
+...
+
+The checklist is not being displayed. In the console dev tools, it shows an error: "Uncaught NotFoundError: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.". Please fix this.
