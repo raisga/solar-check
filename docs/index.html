@@ -1,458 +1,533 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Lista de Verificación para el Diseño e Instalación de Sistemas Eléctricos</title>
+  <head>
+    <meta charset="UTF-8" />
+    <title>
+      Lista de Verificación para el Diseño e Instalación de Sistemas Eléctricos
+    </title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0; /* Ajustamos el margen para que la barra de progreso esté al tope */
-            background-color: #f4f6f7;
-        }
-        h2, h3 {
-            color: #2e86c1;
-        }
-        .section {
-            margin-bottom: 30px;
-        }
-        .task {
-            margin-left: 20px;
-        }
-        .subtask {
-            margin-left: 40px;
-        }
-        .subtask input[type="checkbox"] {
-            margin-right: 10px;
-        }
-        label {
-            display: flex;
-            align-items: center;
-            margin-bottom: 5px;
-        }
-        /* Estilos para la barra de progreso */
-        .progress-container {
-            position: sticky;
-            top: 0;
-            background-color: #f4f6f7;
-            padding: 10px;
-            z-index: 1000;
-            border-bottom: 1px solid #ccc;
-        }
-        .progress-bar {
-            width: 100%;
-            background-color: #e0e0e0;
-            border-radius: 5px;
-            overflow: hidden;
-            height: 20px;
-        }
-        .progress-bar-fill {
-            height: 100%;
-            background-color: #2e86c1;
-            width: 0%;
-            transition: width 0.25s;
-        }
-        .progress-text {
-            text-align: center;
-            margin-top: 5px;
-            font-weight: bold;
-        }
-        /* Ajustamos el margen superior del contenido para no ocultar el encabezado */
-        .content {
-            padding: 20px;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0; /* Ajustamos el margen para que la barra de progreso esté al tope */
+        background-color: #f4f6f7;
+      }
+      h2,
+      h3 {
+        color: #2e86c1;
+      }
+      .section {
+        margin-bottom: 30px;
+      }
+      .task {
+        margin-left: 20px;
+      }
+      .subtask {
+        margin-left: 40px;
+      }
+      .subtask input[type="checkbox"] {
+        margin-right: 10px;
+      }
+      label {
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+      }
+      /* Estilos para la barra de progreso */
+      .progress-container {
+        position: sticky;
+        top: 0;
+        background-color: #f4f6f7;
+        padding: 10px;
+        z-index: 1000;
+        border-bottom: 1px solid #ccc;
+      }
+      .progress-bar {
+        width: 100%;
+        background-color: #e0e0e0;
+        border-radius: 5px;
+        overflow: hidden;
+        height: 20px;
+      }
+      .progress-bar-fill {
+        height: 100%;
+        background-color: #2e86c1;
+        width: 0%;
+        transition: width 0.25s;
+      }
+      .progress-text {
+        text-align: center;
+        margin-top: 5px;
+        font-weight: bold;
+      }
+      /* Ajustamos el margen superior del contenido para no ocultar el encabezado */
+      .content {
+        padding: 20px;
+      }
+
+      #export-button {
+        margin-top: 10px;
+        padding: 10px 20px;
+        background-color: #2e86c1;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      #export-button:hover {
+        background-color: #1b4f72;
+      }
     </style>
-</head>
-<body>
-
-<div class="progress-container">
-    <div class="progress-bar">
+  </head>
+  <body>
+    <div class="progress-container">
+      <div class="progress-bar">
         <div class="progress-bar-fill" id="progress-bar-fill"></div>
+      </div>
+      <div class="progress-text" id="progress-text">0% completado</div>
+      <button id="export-button">Guardar como Excel</button>
     </div>
-    <div class="progress-text" id="progress-text">0% completado</div>
-</div>
 
-<div class="content">
-    <h2>Lista de Verificación para el Diseño e Instalación de Sistemas Eléctricos</h2>
-    <div id="checklist"></div>
-</div>
+    <div class="content">
+      <h2>
+        Lista de Verificación para el Diseño e Instalación de Sistemas
+        Eléctricos
+      </h2>
+      <div id="checklist"></div>
+    </div>
 
-<script>
-    const checklistData = [
-        {
-            title: "1. Diseño Conceptual",
-            tasks: [
-                {
-                    title: "a. Identificación de las Necesidades del Cliente",
-                    subtasks: [
-                        "Determinar el propósito del sistema (doméstico o industrial).",
-                        "Evaluar patrones de consumo de energía y demanda máxima.",
-                        "Entender las condiciones específicas del sitio (ubicación, clima, obstáculos de sombra)."
-                    ]
-                },
-                {
-                    title: "b. Dimensionamiento Preliminar del Sistema",
-                    subtasks: [
-                        "Estimar los requisitos totales de energía (kWh/día).",
-                        "Calcular la capacidad requerida de paneles solares y baterías."
-                    ]
-                },
-                {
-                    title: "c. Selección de Componentes del Sistema",
-                    subtasks: [
-                        "**Paneles Solares**",
-                        "Elegir el tipo de panel (monocristalino, policristalino, película delgada).",
-                        "Determinar el número y la potencia de los paneles necesarios.",
-                        "**Inversores**",
-                        "Seleccionar el tipo de inversor apropiado (cadena, micro, híbrido).",
-                        "Asegurar la compatibilidad con la salida de los paneles y los requisitos de la red.",
-                        "**Baterías**",
-                        "Decidir el tipo de batería (iones de litio, plomo-ácido).",
-                        "Calcular la capacidad de almacenamiento basada en las necesidades energéticas.",
-                        "**Controladores de Carga**",
-                        "Elegir entre controladores MPPT o PWM.",
-                        "Asegurar que coincidan con el voltaje y corriente del sistema.",
-                        "**Dispositivos Adicionales**",
-                        "Considerar generadores de respaldo, sistemas de monitoreo y desconexiones de seguridad."
-                    ]
-                },
-                {
-                    title: "d. Viabilidad y Presupuesto",
-                    subtasks: [
-                        "Estimar costos iniciales y ahorros operativos.",
-                        "Analizar el retorno de inversión (ROI) y período de recuperación.",
-                        "Explorar opciones de financiamiento e incentivos o rebajas disponibles."
-                    ]
-                },
-                {
-                    title: "e. Desarrollo de Propuesta de Ventas",
-                    subtasks: [
-                        "Preparar una propuesta destacando los beneficios del sistema.",
-                        "Incluir ayudas visuales como diagramas conceptuales y distribuciones del sitio.",
-                        "Especificar costos estimados y cronogramas."
-                    ]
-                }
-            ]
-        },
-        {
-            title: "2. Diseño Básico",
-            tasks: [
-                {
-                    title: "a. Verificación de Compatibilidad",
-                    subtasks: [
-                        "Verificar que todos los componentes seleccionados sean eléctricamente compatibles.",
-                        "Asegurar que las clasificaciones de voltaje y corriente se alineen entre los dispositivos."
-                    ]
-                },
-                {
-                    title: "b. Dimensionamiento Detallado del Sistema",
-                    subtasks: [
-                        "Refinar los cálculos para el tamaño y orientación del arreglo de paneles.",
-                        "Ajustar la capacidad de la batería basada en un análisis detallado de cargas.",
-                        "Confirmar que la capacidad del inversor coincida con la salida total del sistema."
-                    ]
-                },
-                {
-                    title: "c. Planificación de la Distribución Física",
-                    subtasks: [
-                        "Planificar la disposición física de los paneles, inversores y baterías.",
-                        "Considerar el espacio en el techo, ángulos de inclinación y sombras para la colocación de los paneles.",
-                        "Asegurar una ventilación adecuada y accesibilidad para el equipo."
-                    ]
-                },
-                {
-                    title: "d. Cumplimiento Normativo",
-                    subtasks: [
-                        "Revisar códigos de construcción locales y estándares eléctricos.",
-                        "Asegurar que el diseño cumpla con las regulaciones de seguridad (NEC, estándares IEC).",
-                        "Planificar los permisos necesarios e inspecciones."
-                    ]
-                },
-                {
-                    title: "e. Esquemáticos Preliminares",
-                    subtasks: [
-                        "Elaborar diagramas eléctricos básicos mostrando las conexiones de los componentes.",
-                        "Resaltar los componentes clave y sus interacciones."
-                    ]
-                }
-            ]
-        },
-        {
-            title: "3. Diseño Detallado",
-            tasks: [
-                {
-                    title: "a. Creación de Diagramas Unifilares",
-                    subtasks: [
-                        "Desarrollar esquemas eléctricos detallados.",
-                        "Ilustrar todas las conexiones, incluyendo tamaños de cableado y dispositivos de protección."
-                    ]
-                },
-                {
-                    title: "b. Especificaciones de Componentes",
-                    subtasks: [
-                        "Finalizar la selección de todos los componentes con modelos exactos.",
-                        "Documentar especificaciones técnicas y hojas de datos del fabricante."
-                    ]
-                },
-                {
-                    title: "c. Diseño de Sistemas de Protección",
-                    subtasks: [
-                        "Diseñar protección contra sobrecorriente con interruptores y fusibles apropiados.",
-                        "Incluir dispositivos de protección contra sobretensiones y pararrayos.",
-                        "Planificar la puesta a tierra y unión según los estándares."
-                    ]
-                },
-                {
-                    title: "d. Equipos y Materiales Auxiliares",
-                    subtasks: [
-                        "Listar todos los cables, conductos, conectores y hardware de montaje necesarios.",
-                        "Especificar tipos de cables, longitudes y clasificaciones."
-                    ]
-                },
-                {
-                    title: "e. Planos Detallados de Instalación",
-                    subtasks: [
-                        "Preparar dibujos de instalación para todo el equipo.",
-                        "Indicar detalles de montaje y requisitos de espacio."
-                    ]
-                },
-                {
-                    title: "f. Análisis de Rendimiento del Sistema",
-                    subtasks: [
-                        "Ejecutar simulaciones para predecir la producción de energía y eficiencia del sistema.",
-                        "Ajustar parámetros de diseño basados en los resultados del análisis."
-                    ]
-                },
-                {
-                    title: "g. Documentación",
-                    subtasks: [
-                        "Compilar un informe de diseño integral.",
-                        "Incluir todos los cálculos, diagramas y especificaciones."
-                    ]
-                }
-            ]
-        },
-        {
-            title: "4. Requisitos",
-            tasks: [
-                {
-                    title: "a. Especificaciones del Sistema Eléctrico",
-                    subtasks: [
-                        "Definir criterios de rendimiento del sistema (eficiencia, capacidad).",
-                        "Especificar parámetros operativos (niveles de voltaje, frecuencia)."
-                    ]
-                },
-                {
-                    title: "b. Lista de Materiales (BOM)",
-                    subtasks: [
-                        "Enumerar todos los componentes y materiales con cantidades.",
-                        "Incluir números de parte, fabricantes y proveedores.",
-                        "Opcionalmente proporcionar costos unitarios y totales."
-                    ]
-                },
-                {
-                    title: "c. Requisitos de Instalación",
-                    subtasks: [
-                        "Detallar procedimientos paso a paso de instalación.",
-                        "Especificar herramientas, equipos y equipo de seguridad necesarios.",
-                        "Detallar habilidades laborales y mano de obra requerida."
-                    ]
-                },
-                {
-                    title: "d. Cumplimiento y Certificaciones",
-                    subtasks: [
-                        "Preparar documentación para permisos eléctricos.",
-                        "Asegurar que todos los componentes cumplan con certificaciones reglamentarias (UL, CE)."
-                    ]
-                },
-                {
-                    title: "e. Cronograma del Proyecto",
-                    subtasks: [
-                        "Desarrollar una línea de tiempo para adquisición, instalación y puesta en marcha.",
-                        "Asignar tiempo para inspecciones y pruebas."
-                    ]
-                },
-                {
-                    title: "f. Manuales de Mantenimiento y Operación",
-                    subtasks: [
-                        "Proporcionar pautas para la operación del sistema.",
-                        "Incluir calendarios de mantenimiento y consejos de solución de problemas."
-                    ]
-                }
-            ]
-        },
-        {
-            title: "5. Instalación",
-            tasks: [
-                {
-                    title: "a. Planificación Previa a la Instalación",
-                    subtasks: [
-                        "Confirmar fechas de entrega para todos los componentes.",
-                        "Coordinar con proveedores y contratistas.",
-                        "Verificar la preparación del sitio y arreglos de acceso."
-                    ]
-                },
-                {
-                    title: "b. Medidas de Seguridad",
-                    subtasks: [
-                        "Implementar protocolos de seguridad para el equipo de instalación.",
-                        "Realizar evaluaciones de riesgo y charlas de seguridad."
-                    ]
-                },
-                {
-                    title: "c. Ejecución de la Instalación",
-                    subtasks: [
-                        "**Paneles Solares**",
-                        "Instalar estructuras de montaje de forma segura.",
-                        "Montar paneles en ángulos y orientaciones correctas.",
-                        "**Inversores y Baterías**",
-                        "Instalar inversores en áreas ventiladas.",
-                        "Colocar baterías en entornos seguros y controlados por temperatura.",
-                        "**Cableado y Conexiones**",
-                        "Encaminar cables de manera ordenada y segura.",
-                        "Asegurar el etiquetado adecuado de todas las conexiones."
-                    ]
-                },
-                {
-                    title: "d. Integración del Sistema",
-                    subtasks: [
-                        "Conectar componentes según el diagrama unifilar.",
-                        "Instalar dispositivos de protección y asegurar la puesta a tierra."
-                    ]
-                },
-                {
-                    title: "e. Controles de Calidad",
-                    subtasks: [
-                        "Inspeccionar todas las instalaciones contra las especificaciones de diseño.",
-                        "Probar conexiones eléctricas para continuidad y resistencia de aislamiento."
-                    ]
-                },
-                {
-                    title: "f. Puesta en Marcha",
-                    subtasks: [
-                        "Energizar el sistema siguiendo las guías del fabricante.",
-                        "Monitorear el rendimiento del sistema y verificarlo contra parámetros esperados.",
-                        "Calibrar sistemas de monitoreo y control."
-                    ]
-                },
-                {
-                    title: "g. Inspecciones Finales",
-                    subtasks: [
-                        "Organizar inspecciones por parte de autoridades reguladoras.",
-                        "Obtener las certificaciones y aprobaciones necesarias."
-                    ]
-                },
-                {
-                    title: "h. Capacitación y Entrega al Cliente",
-                    subtasks: [
-                        "Proporcionar capacitación sobre operación y seguridad del sistema.",
-                        "Entregar toda la documentación, incluyendo garantías y manuales.",
-                        "Ofrecer orientación sobre monitoreo y mantenimiento."
-                    ]
-                },
-                {
-                    title: "i. Soporte Post-Instalación",
-                    subtasks: [
-                        "Programar visitas de seguimiento para evaluar el rendimiento del sistema.",
-                        "Proporcionar información de contacto para soporte técnico."
-                    ]
-                }
-            ]
-        }
-    ];
+    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
 
-    function createChecklist() {
-        const checklistContainer = document.getElementById('checklist');
+    <script>
+      const checklistData = [
+        {
+          title: "1. Diseño Conceptual",
+          tasks: [
+            {
+              title: "a. Identificación de las Necesidades del Cliente",
+              subtasks: [
+                "Determinar el propósito del sistema (doméstico o industrial).",
+                "Evaluar patrones de consumo de energía y demanda máxima.",
+                "Entender las condiciones específicas del sitio (ubicación, clima, obstáculos de sombra).",
+              ],
+            },
+            {
+              title: "b. Dimensionamiento Preliminar del Sistema",
+              subtasks: [
+                "Estimar los requisitos totales de energía (kWh/día).",
+                "Calcular la capacidad requerida de paneles solares y baterías.",
+              ],
+            },
+            {
+              title: "c. Selección de Componentes del Sistema",
+              subtasks: [
+                "**Paneles Solares**",
+                "Elegir el tipo de panel (monocristalino, policristalino, película delgada).",
+                "Determinar el número y la potencia de los paneles necesarios.",
+                "**Inversores**",
+                "Seleccionar el tipo de inversor apropiado (cadena, micro, híbrido).",
+                "Asegurar la compatibilidad con la salida de los paneles y los requisitos de la red.",
+                "**Baterías**",
+                "Decidir el tipo de batería (iones de litio, plomo-ácido).",
+                "Calcular la capacidad de almacenamiento basada en las necesidades energéticas.",
+                "**Controladores de Carga**",
+                "Elegir entre controladores MPPT o PWM.",
+                "Asegurar que coincidan con el voltaje y corriente del sistema.",
+                "**Dispositivos Adicionales**",
+                "Considerar generadores de respaldo, sistemas de monitoreo y desconexiones de seguridad.",
+              ],
+            },
+            {
+              title: "d. Viabilidad y Presupuesto",
+              subtasks: [
+                "Estimar costos iniciales y ahorros operativos.",
+                "Analizar el retorno de inversión (ROI) y período de recuperación.",
+                "Explorar opciones de financiamiento e incentivos o rebajas disponibles.",
+              ],
+            },
+            {
+              title: "e. Desarrollo de Propuesta de Ventas",
+              subtasks: [
+                "Preparar una propuesta destacando los beneficios del sistema.",
+                "Incluir ayudas visuales como diagramas conceptuales y distribuciones del sitio.",
+                "Especificar costos estimados y cronogramas.",
+              ],
+            },
+          ],
+        },
+        {
+          title: "2. Diseño Básico",
+          tasks: [
+            {
+              title: "a. Verificación de Compatibilidad",
+              subtasks: [
+                "Verificar que todos los componentes seleccionados sean eléctricamente compatibles.",
+                "Asegurar que las clasificaciones de voltaje y corriente se alineen entre los dispositivos.",
+              ],
+            },
+            {
+              title: "b. Dimensionamiento Detallado del Sistema",
+              subtasks: [
+                "Refinar los cálculos para el tamaño y orientación del arreglo de paneles.",
+                "Ajustar la capacidad de la batería basada en un análisis detallado de cargas.",
+                "Confirmar que la capacidad del inversor coincida con la salida total del sistema.",
+              ],
+            },
+            {
+              title: "c. Planificación de la Distribución Física",
+              subtasks: [
+                "Planificar la disposición física de los paneles, inversores y baterías.",
+                "Considerar el espacio en el techo, ángulos de inclinación y sombras para la colocación de los paneles.",
+                "Asegurar una ventilación adecuada y accesibilidad para el equipo.",
+              ],
+            },
+            {
+              title: "d. Cumplimiento Normativo",
+              subtasks: [
+                "Revisar códigos de construcción locales y estándares eléctricos.",
+                "Asegurar que el diseño cumpla con las regulaciones de seguridad (NEC, estándares IEC).",
+                "Planificar los permisos necesarios e inspecciones.",
+              ],
+            },
+            {
+              title: "e. Esquemáticos Preliminares",
+              subtasks: [
+                "Elaborar diagramas eléctricos básicos mostrando las conexiones de los componentes.",
+                "Resaltar los componentes clave y sus interacciones.",
+              ],
+            },
+          ],
+        },
+        {
+          title: "3. Diseño Detallado",
+          tasks: [
+            {
+              title: "a. Creación de Diagramas Unifilares",
+              subtasks: [
+                "Desarrollar esquemas eléctricos detallados.",
+                "Ilustrar todas las conexiones, incluyendo tamaños de cableado y dispositivos de protección.",
+              ],
+            },
+            {
+              title: "b. Especificaciones de Componentes",
+              subtasks: [
+                "Finalizar la selección de todos los componentes con modelos exactos.",
+                "Documentar especificaciones técnicas y hojas de datos del fabricante.",
+              ],
+            },
+            {
+              title: "c. Diseño de Sistemas de Protección",
+              subtasks: [
+                "Diseñar protección contra sobrecorriente con interruptores y fusibles apropiados.",
+                "Incluir dispositivos de protección contra sobretensiones y pararrayos.",
+                "Planificar la puesta a tierra y unión según los estándares.",
+              ],
+            },
+            {
+              title: "d. Equipos y Materiales Auxiliares",
+              subtasks: [
+                "Listar todos los cables, conductos, conectores y hardware de montaje necesarios.",
+                "Especificar tipos de cables, longitudes y clasificaciones.",
+              ],
+            },
+            {
+              title: "e. Planos Detallados de Instalación",
+              subtasks: [
+                "Preparar dibujos de instalación para todo el equipo.",
+                "Indicar detalles de montaje y requisitos de espacio.",
+              ],
+            },
+            {
+              title: "f. Análisis de Rendimiento del Sistema",
+              subtasks: [
+                "Ejecutar simulaciones para predecir la producción de energía y eficiencia del sistema.",
+                "Ajustar parámetros de diseño basados en los resultados del análisis.",
+              ],
+            },
+            {
+              title: "g. Documentación",
+              subtasks: [
+                "Compilar un informe de diseño integral.",
+                "Incluir todos los cálculos, diagramas y especificaciones.",
+              ],
+            },
+          ],
+        },
+        {
+          title: "4. Requisitos",
+          tasks: [
+            {
+              title: "a. Especificaciones del Sistema Eléctrico",
+              subtasks: [
+                "Definir criterios de rendimiento del sistema (eficiencia, capacidad).",
+                "Especificar parámetros operativos (niveles de voltaje, frecuencia).",
+              ],
+            },
+            {
+              title: "b. Lista de Materiales (BOM)",
+              subtasks: [
+                "Enumerar todos los componentes y materiales con cantidades.",
+                "Incluir números de parte, fabricantes y proveedores.",
+                "Opcionalmente proporcionar costos unitarios y totales.",
+              ],
+            },
+            {
+              title: "c. Requisitos de Instalación",
+              subtasks: [
+                "Detallar procedimientos paso a paso de instalación.",
+                "Especificar herramientas, equipos y equipo de seguridad necesarios.",
+                "Detallar habilidades laborales y mano de obra requerida.",
+              ],
+            },
+            {
+              title: "d. Cumplimiento y Certificaciones",
+              subtasks: [
+                "Preparar documentación para permisos eléctricos.",
+                "Asegurar que todos los componentes cumplan con certificaciones reglamentarias (UL, CE).",
+              ],
+            },
+            {
+              title: "e. Cronograma del Proyecto",
+              subtasks: [
+                "Desarrollar una línea de tiempo para adquisición, instalación y puesta en marcha.",
+                "Asignar tiempo para inspecciones y pruebas.",
+              ],
+            },
+            {
+              title: "f. Manuales de Mantenimiento y Operación",
+              subtasks: [
+                "Proporcionar pautas para la operación del sistema.",
+                "Incluir calendarios de mantenimiento y consejos de solución de problemas.",
+              ],
+            },
+          ],
+        },
+        {
+          title: "5. Instalación",
+          tasks: [
+            {
+              title: "a. Planificación Previa a la Instalación",
+              subtasks: [
+                "Confirmar fechas de entrega para todos los componentes.",
+                "Coordinar con proveedores y contratistas.",
+                "Verificar la preparación del sitio y arreglos de acceso.",
+              ],
+            },
+            {
+              title: "b. Medidas de Seguridad",
+              subtasks: [
+                "Implementar protocolos de seguridad para el equipo de instalación.",
+                "Realizar evaluaciones de riesgo y charlas de seguridad.",
+              ],
+            },
+            {
+              title: "c. Ejecución de la Instalación",
+              subtasks: [
+                "**Paneles Solares**",
+                "Instalar estructuras de montaje de forma segura.",
+                "Montar paneles en ángulos y orientaciones correctas.",
+                "**Inversores y Baterías**",
+                "Instalar inversores en áreas ventiladas.",
+                "Colocar baterías en entornos seguros y controlados por temperatura.",
+                "**Cableado y Conexiones**",
+                "Encaminar cables de manera ordenada y segura.",
+                "Asegurar el etiquetado adecuado de todas las conexiones.",
+              ],
+            },
+            {
+              title: "d. Integración del Sistema",
+              subtasks: [
+                "Conectar componentes según el diagrama unifilar.",
+                "Instalar dispositivos de protección y asegurar la puesta a tierra.",
+              ],
+            },
+            {
+              title: "e. Controles de Calidad",
+              subtasks: [
+                "Inspeccionar todas las instalaciones contra las especificaciones de diseño.",
+                "Probar conexiones eléctricas para continuidad y resistencia de aislamiento.",
+              ],
+            },
+            {
+              title: "f. Puesta en Marcha",
+              subtasks: [
+                "Energizar el sistema siguiendo las guías del fabricante.",
+                "Monitorear el rendimiento del sistema y verificarlo contra parámetros esperados.",
+                "Calibrar sistemas de monitoreo y control.",
+              ],
+            },
+            {
+              title: "g. Inspecciones Finales",
+              subtasks: [
+                "Organizar inspecciones por parte de autoridades reguladoras.",
+                "Obtener las certificaciones y aprobaciones necesarias.",
+              ],
+            },
+            {
+              title: "h. Capacitación y Entrega al Cliente",
+              subtasks: [
+                "Proporcionar capacitación sobre operación y seguridad del sistema.",
+                "Entregar toda la documentación, incluyendo garantías y manuales.",
+                "Ofrecer orientación sobre monitoreo y mantenimiento.",
+              ],
+            },
+            {
+              title: "i. Soporte Post-Instalación",
+              subtasks: [
+                "Programar visitas de seguimiento para evaluar el rendimiento del sistema.",
+                "Proporcionar información de contacto para soporte técnico.",
+              ],
+            },
+          ],
+        },
+      ];
+
+      function createChecklist() {
+        const checklistContainer = document.getElementById("checklist");
 
         let totalCheckboxes = 0;
         let checkedCheckboxes = 0;
 
         // Función para actualizar la barra de progreso
         function updateProgressBar() {
-            const progressBarFill = document.getElementById('progress-bar-fill');
-            const progressText = document.getElementById('progress-text');
-            const percentage = totalCheckboxes === 0 ? 0 : Math.round((checkedCheckboxes / totalCheckboxes) * 100);
-            progressBarFill.style.width = `${percentage}%`;
-            progressText.textContent = `${percentage}% completado`;
+          const progressBarFill = document.getElementById("progress-bar-fill");
+          const progressText = document.getElementById("progress-text");
+          const percentage =
+            totalCheckboxes === 0
+              ? 0
+              : Math.round((checkedCheckboxes / totalCheckboxes) * 100);
+          progressBarFill.style.width = `${percentage}%`;
+          progressText.textContent = `${percentage}% completado`;
         }
 
         checklistData.forEach((section, sectionIndex) => {
-            const sectionDiv = document.createElement('div');
-            sectionDiv.className = 'section';
+          const sectionDiv = document.createElement("div");
+          sectionDiv.className = "section";
 
-            const sectionTitle = document.createElement('h3');
-            sectionTitle.textContent = section.title;
-            sectionDiv.appendChild(sectionTitle);
+          const sectionTitle = document.createElement("h3");
+          sectionTitle.textContent = section.title;
+          sectionDiv.appendChild(sectionTitle);
 
-            section.tasks.forEach((task, taskIndex) => {
-                const taskDiv = document.createElement('div');
-                taskDiv.className = 'task';
+          section.tasks.forEach((task, taskIndex) => {
+            const taskDiv = document.createElement("div");
+            taskDiv.className = "task";
 
-                const taskTitle = document.createElement('p');
-                taskTitle.textContent = task.title;
-                taskDiv.appendChild(taskTitle);
+            const taskTitle = document.createElement("p");
+            taskTitle.textContent = task.title;
+            taskDiv.appendChild(taskTitle);
 
-                task.subtasks.forEach((subtask, subtaskIndex) => {
-                    const subtaskDiv = document.createElement('div');
-                    subtaskDiv.className = 'subtask';
+            task.subtasks.forEach((subtask, subtaskIndex) => {
+              const subtaskDiv = document.createElement("div");
+              subtaskDiv.className = "subtask";
 
-                    const label = document.createElement('label');
+              const label = document.createElement("label");
 
-                    if (subtask.startsWith("**") && subtask.endsWith("**")) {
-                        // Es un subtítulo, mostrar en negrita sin checkbox
-                        const strongText = document.createElement('strong');
-                        strongText.textContent = subtask.replace(/\*\*/g, '');
-                        label.appendChild(strongText);
-                    } else {
-                        // Crear el checkbox
-                        const checkbox = document.createElement('input');
-                        checkbox.type = 'checkbox';
+              if (subtask.startsWith("**") && subtask.endsWith("**")) {
+                // Es un subtítulo, mostrar en negrita sin checkbox
+                const strongText = document.createElement("strong");
+                strongText.textContent = subtask.replace(/\*\*/g, "");
+                label.appendChild(strongText);
+              } else {
+                // Crear el checkbox
+                const checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
 
-                        // Incrementar el conteo total de checkboxes
-                        totalCheckboxes++;
+                // Incrementar el conteo total de checkboxes
+                totalCheckboxes++;
 
-                        // Crear una clave única para cada subtask
-                        const checkboxId = `section${sectionIndex}_task${taskIndex}_subtask${subtaskIndex}`;
-                        checkbox.id = checkboxId;
+                // Crear una clave única para cada subtask
+                const checkboxId = `section${sectionIndex}_task${taskIndex}_subtask${subtaskIndex}`;
+                checkbox.id = checkboxId;
 
-                        // Cargar el estado del checkbox desde localStorage
-                        const savedState = localStorage.getItem(checkboxId);
-                        if (savedState === 'true') {
-                            checkbox.checked = true;
-                            checkedCheckboxes++;
-                        }
+                // Cargar el estado del checkbox desde localStorage
+                const savedState = localStorage.getItem(checkboxId);
+                if (savedState === "true") {
+                  checkbox.checked = true;
+                  checkedCheckboxes++;
+                }
 
-                        // Agregar evento para guardar el estado al marcar/desmarcar
-                        checkbox.addEventListener('change', () => {
-                            localStorage.setItem(checkboxId, checkbox.checked);
-                            // Actualizar el conteo de checkboxes marcados
-                            if (checkbox.checked) {
-                                checkedCheckboxes++;
-                            } else {
-                                checkedCheckboxes--;
-                            }
-                            updateProgressBar();
-                        });
-
-                        label.appendChild(checkbox);
-                        label.appendChild(document.createTextNode(subtask));
-                    }
-
-                    subtaskDiv.appendChild(label);
-                    taskDiv.appendChild(subtaskDiv);
+                // Agregar evento para guardar el estado al marcar/desmarcar
+                checkbox.addEventListener("change", () => {
+                  localStorage.setItem(checkboxId, checkbox.checked);
+                  // Actualizar el conteo de checkboxes marcados
+                  if (checkbox.checked) {
+                    checkedCheckboxes++;
+                  } else {
+                    checkedCheckboxes--;
+                  }
+                  updateProgressBar();
                 });
 
-                sectionDiv.appendChild(taskDiv);
+                label.appendChild(checkbox);
+                label.appendChild(document.createTextNode(subtask));
+              }
+
+              subtaskDiv.appendChild(label);
+              taskDiv.appendChild(subtaskDiv);
             });
 
-            checklistContainer.appendChild(sectionDiv);
+            sectionDiv.appendChild(taskDiv);
+          });
+
+          checklistContainer.appendChild(sectionDiv);
         });
 
         // Actualizar la barra de progreso al cargar la página
         updateProgressBar();
-    }
+      }
 
-    createChecklist();
-</script>
+      function exportToExcel() {
+        // Crear un arreglo para almacenar los datos
+        const data = [];
 
-</body>
+        // Recorrer checklistData y extraer la información
+        checklistData.forEach((section, sectionIndex) => {
+          data.push([section.title]); // Agregar título de sección como una fila
+
+          section.tasks.forEach((task, taskIndex) => {
+            data.push([task.title]); // Agregar título de tarea
+
+            task.subtasks.forEach((subtask, subtaskIndex) => {
+              let subtaskText = subtask;
+              let isChecked = "";
+              let isSubtitle = false;
+
+              if (subtask.startsWith("**") && subtask.endsWith("**")) {
+                // Es un subtítulo
+                subtaskText = subtask.replace(/\*\*/g, "");
+                isSubtitle = true;
+              } else {
+                // Es una subtarea con checkbox
+                const checkboxId = `section${sectionIndex}_task${taskIndex}_subtask${subtaskIndex}`;
+                const checked = localStorage.getItem(checkboxId) === "true";
+                isChecked = checked ? "Completado" : "Pendiente";
+              }
+
+              // Agregar la subtarea al arreglo de datos
+              if (isSubtitle) {
+                data.push([subtaskText]); // Agregar subtítulo sin estado
+              } else {
+                data.push(["", subtaskText, isChecked]); // Agregar subtarea con estado
+              }
+            });
+          });
+        });
+
+        // Crear una hoja de cálculo
+        const ws = XLSX.utils.aoa_to_sheet(data);
+
+        // Crear un libro de trabajo y agregar la hoja
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Lista de Verificación");
+
+        // Exportar el archivo Excel
+        XLSX.writeFile(wb, "Lista_de_Verificacion.xlsx");
+      }
+
+      createChecklist();
+
+
+      document.getElementById('export-button').addEventListener('click', exportToExcel);
+
+    </script>
+  </body>
 </html>
